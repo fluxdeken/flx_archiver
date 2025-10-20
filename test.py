@@ -75,12 +75,15 @@ class Encryptor:
         for _ in range(12):
             archive_name += alph[random.randrange(0, alph_len)]
         
-        archive_path = Path.cwd()
-        if len(folders_paths) != 0:
-            archive_path = Path(Path(Path(folders_paths[0][0]).parent).parent).joinpath(archive_name)
-        else:
-            archive_path = Path(Path(self.files[0]).parent).joinpath(archive_name)
-
+        #archive_path = Path.cwd()
+        #if len(folders_paths) != 0:
+        #    archive_path = Path(Path(Path(folders_paths[0][0]).parent).parent).joinpath(archive_name)
+        #else:
+        #    archive_path = Path(Path(self.files[0]).parent).joinpath(archive_name)
+        archive_path = Path.cwd().joinpath("archives")
+        archive_path.mkdir(parents=True, exist_ok=True)
+        archive_path /= archive_name
+        
         key, salt = self.get_key_from_password(pswrd.get())
         aesgcm = AESGCM(key)
         
