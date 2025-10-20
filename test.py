@@ -20,9 +20,20 @@ class Encryptor:
         self.folders = []
 
     def choose_files(self):
-        self.files = list(filedialog.askopenfilenames(
+        self.files += list(filedialog.askopenfilenames(
         title="Выберите файл",
         filetypes=[("All files", "*.*")]))
+
+    def choose_folder(self):
+        folder_path = filedialog.askdirectory(
+            title="Choose path"
+        )
+        if folder_path != "":
+            self.folders.append(folder_path)
+
+    def clear(self):
+        self.files.clear()
+        self.folders.clear()
 
     def get_key_from_password(self, password: str, salt=None):
         
@@ -168,17 +179,6 @@ class Encryptor:
         self.clear()
         messagebox.showinfo("Success", "Successfully decrypted.")
         return True
-
-    def choose_folder(self):
-        folder_path = filedialog.askdirectory(
-            title="Choose path"
-        )
-        if folder_path != "":
-            self.folders.append(folder_path)
-
-    def clear(self):
-        self.files.clear()
-        self.folders.clear()
 
     def get_all_files_and_relative_paths(self, folder_list: List[str]) -> List[Tuple[str, str]]:
         all_files_data: List[Tuple[str, str]] = []
